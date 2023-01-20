@@ -13,6 +13,7 @@ public class App {
     private static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "3000");
         return Integer.parseInt(port);
+
     }
 
     private static String getMode() {

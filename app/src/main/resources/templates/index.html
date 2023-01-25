@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/application.html}">
+
+<section layout:fragment="header">
+    Создание страницы
+</section>
+
+<section layout:fragment="content">
+    <form action="/urls" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Наименование</label>
+            <input type="text" class="form-control" id="name" name="url" th:value="${url.getName()}" placeholder="Введите URL страницы">
+        </div>
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</section>
+
+</html>

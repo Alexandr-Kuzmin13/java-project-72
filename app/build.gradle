@@ -4,7 +4,6 @@ plugins {
     id 'checkstyle'
     id 'com.adarshr.test-logger' version '3.2.0'
     id 'jacoco'
-    //id 'io.freefair.lombok' version '6.4.1'
     id 'com.github.ben-manes.versions' version '0.39.0'
     id 'io.ebean' version '12.12.1'
 }
@@ -103,3 +102,5 @@ jar {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
+sourceSets.main.java.srcDirs = ['src/main/java', 'build/generated/sources/annotationProcessor/java/main']

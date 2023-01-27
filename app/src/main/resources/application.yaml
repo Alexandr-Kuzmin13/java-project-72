@@ -3,8 +3,8 @@ datasource:
   development:
     username: sa
     password: sa
-    url: "jdbc:h2:./database"
+    url: "jdbc:h2:file:~/h2/java-project-72"
   production:
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
-    url: ${JDBC_DATABASE_URL}
+    username: rusglagol
+    password: Polk_8814
+    url: "jdbc:postgresql://localhost/url"

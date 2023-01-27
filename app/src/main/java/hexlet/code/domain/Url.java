@@ -22,6 +22,7 @@ public final class Url extends Model {
     }
 
     public Url(String fieldName) {
+
         this.name = fieldName;
     }
 

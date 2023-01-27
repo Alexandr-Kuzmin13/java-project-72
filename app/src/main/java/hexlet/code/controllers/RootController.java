@@ -1,14 +1,14 @@
 package hexlet.code.controllers;
 
-import hexlet.code.domain.Url;
 import io.javalin.http.Handler;
+
+import java.util.Map;
 
 public class RootController {
 
     public static Handler newUrl = ctx -> {
-        Url url = new Url();
 
-        ctx.attribute("url", url);
+        ctx.attribute("url", Map.of());
         ctx.render("/index.html");
     };
 

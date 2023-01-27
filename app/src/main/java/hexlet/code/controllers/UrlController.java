@@ -2,10 +2,13 @@ package hexlet.code.controllers;
 
 import hexlet.code.domain.Url;
 import hexlet.code.domain.query.QUrl;
-import io.ebean.PagedList;
+//import io.ebean.PagedList;
 import io.javalin.http.Handler;
-import io.javalin.http.NotFoundResponse;
+//import io.javalin.http.NotFoundResponse;
+
+//import java.time.Instant;
 import java.util.List;
+//import java.util.Objects;
 
 public class UrlController {
 
@@ -41,7 +44,7 @@ public class UrlController {
     };*/
 
     public static Handler listUrls = ctx -> {
-        int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
+        /*int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
         int rowsPerPage = ROWS_PER_PAGE;
         int offset = (page - 1) * rowsPerPage;
 
@@ -56,6 +59,14 @@ public class UrlController {
 
         ctx.attribute("urls", urls);
         ctx.attribute("page", page);
+        ctx.render("urls/index.html");*/
+
+        List<Url> urls = new QUrl()
+                .orderBy()
+                .id.asc()
+                .findList();
+
+        ctx.attribute("urls", urls);
         ctx.render("urls/index.html");
     };
 
@@ -88,7 +99,7 @@ public class UrlController {
         ctx.redirect("/urls");
     };
 
-    public static Handler showUrl = ctx -> {
+    /*public static Handler showUrl = ctx -> {
         int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
 
         Url url = new QUrl()
@@ -101,5 +112,5 @@ public class UrlController {
 
         ctx.attribute("url", url);
         ctx.render("urls/show.html");
-    };
+    };*/
 }

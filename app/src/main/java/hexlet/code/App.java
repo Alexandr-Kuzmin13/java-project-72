@@ -1,6 +1,6 @@
 package hexlet.code;
 
-import hexlet.code.controllers.RootController;
+//import hexlet.code.controllers.RootController;
 import hexlet.code.controllers.UrlController;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
@@ -12,18 +12,18 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 public class App {
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "4000");
+        String port = System.getenv().getOrDefault("PORT", "7000");
         return Integer.parseInt(port);
 
     }
 
-    private static String getMode() {
+    /*private static String getMode() {
         return System.getenv().getOrDefault("APP_ENV", "development");
     }
 
     private static boolean isProduction() {
         return getMode().equals("production");
-    }
+    }*/
 
     private static TemplateEngine getTemplateEngine() {
         TemplateEngine templateEngine = new TemplateEngine();
@@ -40,8 +40,8 @@ public class App {
 
     private static void addRoutes(Javalin app) {
 
-        app.get("/", RootController.newUrl);
-        app.post("/urls", UrlController.createUrl);
+        app.get("/", UrlController.newUrl);
+        //app.post("/urls", UrlController.createUrl);
         app.get("/urls", UrlController.listUrls);
         //app.get("/urls/{id}", UrlController.showUrl);
 
@@ -57,9 +57,9 @@ public class App {
 
     public static Javalin getApp() {
         Javalin app = Javalin.create(config -> {
-            if (!isProduction()) {
+            /*if (!isProduction()) {
                 config.enableDevLogging();
-            }
+            }*/
             config.enableWebjars();
             JavalinThymeleaf.configure(getTemplateEngine());
         });

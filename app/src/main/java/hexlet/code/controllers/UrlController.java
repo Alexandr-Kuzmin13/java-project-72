@@ -4,15 +4,22 @@ import hexlet.code.domain.Url;
 import hexlet.code.domain.query.QUrl;
 //import io.ebean.PagedList;
 import io.javalin.http.Handler;
-//import io.javalin.http.NotFoundResponse;
+//import io.javelin.http.NotFoundResponse;
 
 //import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 //import java.util.Objects;
 
 public class UrlController {
 
-    private static final int ROWS_PER_PAGE = 10;
+    //private static final int ROWS_PER_PAGE = 10;
+
+    public static Handler newUrl = ctx -> {
+
+        ctx.attribute("url", Map.of());
+        ctx.render("index.html");
+    };
 
     /*public static Handler listUrls = ctx -> {
         //String term = ctx.queryParamAsClass("term", String.class).getOrDefault("");
@@ -62,18 +69,18 @@ public class UrlController {
         ctx.render("urls/index.html");*/
 
         List<Url> urls = new QUrl()
-                .orderBy()
-                .id.asc()
+                //.orderBy()
+                    //.id.asc()
                 .findList();
 
         ctx.attribute("urls", urls);
         ctx.render("urls/index.html");
     };
 
-    public static Handler createUrl = ctx -> {
+    /*public static Handler createUrl = ctx -> {
         String name = ctx.formParam("name");
         Url url = new Url(name);
-        /*try {
+        *//*try {
             assert name != null;
             new URL(name);
         } catch (MalformedURLException ignored) {
@@ -90,14 +97,14 @@ public class UrlController {
             ctx.attribute("url", url);
             ctx.render("/index.html");
             return;
-        }*/
+        }*//*
 
         url.save();
 
         ctx.sessionAttribute("flash", "Страница успешно добавлена");
         ctx.sessionAttribute("flash-type", "success");
         ctx.redirect("/urls");
-    };
+    };*/
 
     /*public static Handler showUrl = ctx -> {
         int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);

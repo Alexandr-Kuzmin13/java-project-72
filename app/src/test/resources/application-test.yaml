@@ -1,10 +1,10 @@
 ebean:
   test:
     useDocker: false
-    platform: h2
+    platform: postgres
     ddlMode: dropCreate
-    dbName: test
-  ddl:
-    run: true
-    generate: true
-    seedSql: seed-test-db.sql
+    dbName: url
+#  ddl:
+#    run: true
+#    generate: true
+#    seedSql: seed-test-db.sql

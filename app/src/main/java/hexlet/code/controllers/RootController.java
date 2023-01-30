@@ -9,7 +9,7 @@ public class RootController {
     public static Handler newUrl = ctx -> {
 
         ctx.attribute("url", Map.of());
-        ctx.render("/index.html");
+        ctx.render("index.html");
     };
 
 }

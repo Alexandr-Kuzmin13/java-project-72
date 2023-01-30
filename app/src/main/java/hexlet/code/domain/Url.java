@@ -1,11 +1,12 @@
 package hexlet.code.domain;
 
 import io.ebean.Model;
-import io.ebean.annotation.WhenCreated;
+//import io.ebean.annotation.NotNull;
+//import io.ebean.annotation.WhenCreated;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.time.Instant;
+//import java.time.Instant;
 
 @Entity
 public final class Url extends Model {
@@ -15,8 +16,8 @@ public final class Url extends Model {
 
     private String name;
 
-    @WhenCreated
-    private Instant createdAt;
+//    @WhenCreated
+//    private Instant createdAt;
 
     public Url() {
     }
@@ -34,7 +35,7 @@ public final class Url extends Model {
         return this.name;
     }
 
-    public Instant getCreatedAt() {
+    /*public Instant getCreatedAt() {
         return this.createdAt;
-    }
+    }*/
 }

@@ -1,10 +1,64 @@
+#datasource:
+#  default: ${APP_ENV}
+#  development:
+#    username: "sa"
+#    password: "sa"
+##    url: "jdbc:h2:file:~/h2/java-project-72"
+#    url: "jdbc:h2:./java-project-72"
+#  production:
+#    username: rusglagol
+#    password: Polk_8814
+#    url: "jdbc:postgresql://127.0.0.1/url"
+#datasource:
+#  default: ${APP_ENV}
+#  development:
+#    username: sa
+#    password: sa
+#    url: "jdbc:h2:./java-project-72"
+#  production:
+#    username: ${JDBC_DATABASE_USERNAME}
+#    password: ${JDBC_DATABASE_PASSWORD}
+#    url: ${JDBC_DATABASE_URL}
+#datasource:
+#  default: ${APP_ENV}
+#  development:
+#    username: sa
+#    password: sa
+#    url: "jdbc:h2:file:~/h2/java-project-72"
+#  production:
+#    username: rusglagol
+#    password: Polk_8814
+#    url: "jdbc:postgresql://127.0.0.1/url"
+
 datasource:
-  default: ${APP_ENV}
-  development:
-    username: sa
-    password: sa
-    url: "jdbc:h2:file:~/h2/java-project-72"
-  production:
+  db:
     username: rusglagol
     password: Polk_8814
-    url: "jdbc:postgresql://localhost/url"
+    url: "jdbc:postgresql://127.0.0.1:5432/url"
+
+ebean:
+  migration:
+    run: true
+  dbSchema: public
+
+#datasource:
+#  platform: postgres
+#  url: jdbc:postgresql://localhost:5432/url
+#  username: rusglagol
+#  password: Polk_8814
+#  driverClassName: org.postgresql.Driver
+
+#datasource:
+#  default: ${APP_ENV}
+#  development:
+#    username: sa
+#    password: sa
+#    url: jdbc:h2:mem:dev_db
+#  production:
+#    username: ${JDBC_DATABASE_USERNAME}
+#    password: ${JDBC_DATABASE_PASSWORD}
+#    url: ${JDBC_DATABASE_URL}
+#
+#ebean:
+#  migration:
+#    run: true

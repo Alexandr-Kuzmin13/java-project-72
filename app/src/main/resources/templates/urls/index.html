@@ -1,4 +1,4 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/application.html}">
 
@@ -22,12 +22,12 @@
             <td>
                 <a th:href="@{/urls/{id}(id=*{getId()})}" th:text="${#strings.abbreviate(url.getName(), 30)}"></a>
             </td>
-            <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${#temporals.format(url.getCreatedAt(), 'yyyy/MM/dd HH:mm')}"></td>
         </tr>
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation" th:if="${#lists.size(pages)}">
+    <!--<nav aria-label="Page navigation" th:if="${#lists.size(pages)}">
         <ul class="pagination justify-content-center mt-5">
             <li th:class="'page-item' + ${currentPage <= 1 ? ' disabled' : ''}">
                 <a class="page-link" th:href="@{/urls(page=${currentPage - 1},term=${term})}">Previous</a>
@@ -39,84 +39,7 @@
                 <a class="page-link" th:href="@{/urls(page=${currentPage + 1},)}">Next</a>
             </li>
         </ul>
-    </nav>
+    </nav>-->
 </section>
 
-</html>-->
-
-<!--
-<!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/application.html}">
-
-<section layout:fragment="header">
-    Страницы
-</section>
-
-<section layout:fragment="content">
-
-    <table class="table table-striped mt-5">
-        <thead>
-        <tr>
-            <th class="col-1">ID</th>
-            <th class="col-3">Страница</th>
-&lt;!&ndash;            <th class="col-2">Дата создания</th>&ndash;&gt;
-        </tr>
-        </thead>
-&lt;!&ndash;        <tbody>&ndash;&gt;
-&lt;!&ndash;        <tr th:each="url : ${urls}" th:object="${url}">&ndash;&gt;
-&lt;!&ndash;            <td th:text="*{getId()}"></td>&ndash;&gt;
-&lt;!&ndash;            <td>&ndash;&gt;
-&lt;!&ndash;                <a th:href="@{/urls/{id}(id=*{getId()})}" th:text="${#strings.abbreviate(url.getName(), 30)}"></a>&ndash;&gt;
-&lt;!&ndash;            </td>&ndash;&gt;
-&lt;!&ndash;&lt;!&ndash;            <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>&ndash;&gt;&ndash;&gt;
-&lt;!&ndash;        </tr>&ndash;&gt;
-&lt;!&ndash;        </tbody>&ndash;&gt;
-    </table>
-
-    &lt;!&ndash;<nav aria-label="Page navigation" th:if="${#lists.size(pages)}">
-        <ul class="pagination justify-content-center mt-5">
-            <li th:class="'page-item' + ${currentPage <= 1 ? ' disabled' : ''}">
-                <a class="page-link" th:href="@{/urls(page=${currentPage - 1},term=${term})}">Previous</a>
-            </li>
-            <li th:each="page : ${pages}" th:class="'page-item' + ${currentPage == page ? ' active' : ''}">
-                <a class="page-link" th:href="@{/urls(page=${page},term=${term})}" th:text="${page}"></a>
-            </li>
-            <li th:class="'page-item' + ${currentPage >= #lists.size(pages) ? ' disabled' : ''}">
-                <a class="page-link" th:href="@{/urls(page=${currentPage + 1},)}">Next</a>
-            </li>
-        </ul>
-    </nav>&ndash;&gt;
-</section>
-
-</html>-->
-
-<!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/application.html}">
-
-<head>
-    <title>Urls</title>
-</head>
-<section layout:fragment="content">
-    <!--<div class="container">
-        <a class="btn btn-primary" href="/users/new">Создать нового пользователя</a>
-    </div>-->
-    <table class="table">
-        <thead>
-        <th>ID</th>
-        <th>Полное имя</th>
-<!--        <th>Email</th>-->
-        </thead>
-        <tbody>
-        <tr th:each="url : ${urls}" th:object="${url}">
-            <td th:text="*{id}"></td>
-            <!--<td>
-                <a th:text="*{name}" th:href="@{/urls/{id}(id=*{id})}"></a>
-            </td>-->
-            <td th:text="*{name}"></td>
-<!--            <td th:text="*{email}"></td>-->
-        </tr>
-        </tbody>
-    </table>
-</section>
+</html>

@@ -2,15 +2,14 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/application.html}">
 
-<section layout:fragment="header">
-    Просмотр страницы
-</section>
-
-<section layout:fragment="content" th:object="${url}">
-    <div class="card">
-        <div class="card-header bg-secondary text-white">
-            <h2 th:text="*{getName()}"></h2>
-        </div>
+<section layout:fragment="content">
+    <h3>Данные пользователя</h3>
+    <div class="card" th:object="${url}">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" th:text="'Id: ' + *{id}"></li>
+            <li class="list-group-item" th:text="'URL: ' + *{name}"></li>
+            <li class="list-group-item" th:text="'Дата создания: ' + ${#temporals.format(url.getCreatedAt(), 'yyyy/MM/dd HH:mm')}"></li>
+        </ul>
     </div>
 </section>
 

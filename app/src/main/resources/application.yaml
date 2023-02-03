@@ -1,64 +1,30 @@
 #datasource:
-#  default: ${APP_ENV}
-#  development:
-#    username: "sa"
-#    password: "sa"
-##    url: "jdbc:h2:file:~/h2/java-project-72"
-#    url: "jdbc:h2:./java-project-72"
-#  production:
+#  db:
 #    username: rusglagol
 #    password: Polk_8814
-#    url: "jdbc:postgresql://127.0.0.1/url"
-#datasource:
-#  default: ${APP_ENV}
-#  development:
-#    username: sa
-#    password: sa
-#    url: "jdbc:h2:./java-project-72"
-#  production:
-#    username: ${JDBC_DATABASE_USERNAME}
-#    password: ${JDBC_DATABASE_PASSWORD}
-#    url: ${JDBC_DATABASE_URL}
-#datasource:
-#  default: ${APP_ENV}
-#  development:
-#    username: sa
-#    password: sa
-#    url: "jdbc:h2:file:~/h2/java-project-72"
-#  production:
-#    username: rusglagol
-#    password: Polk_8814
-#    url: "jdbc:postgresql://127.0.0.1/url"
-
-datasource:
-  db:
-    username: rusglagol
-    password: Polk_8814
-    url: "jdbc:postgresql://127.0.0.1:5432/url"
+#    url: jdbc:postgresql://localhost:5432/url
 
 ebean:
   migration:
     run: true
-  dbSchema: public
+datasource:
+  db:
+    username: sa
+    password: sa
+    #url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:test_db
 
-#datasource:
-#  platform: postgres
-#  url: jdbc:postgresql://localhost:5432/url
-#  username: rusglagol
-#  password: Polk_8814
-#  driverClassName: org.postgresql.Driver
-
+#ebean:
+#  migration:
+#    run: true
 #datasource:
 #  default: ${APP_ENV}
 #  development:
 #    username: sa
 #    password: sa
-#    url: jdbc:h2:mem:dev_db
+#    url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE;DB_CLOSE_ON_EXIT=FALSE
 #  production:
-#    username: ${JDBC_DATABASE_USERNAME}
-#    password: ${JDBC_DATABASE_PASSWORD}
-#    url: ${JDBC_DATABASE_URL}
-#
-#ebean:
-#  migration:
-#    run: true
+#    username: rusglagol
+#    password: Polk_8814
+#    url: jdbc:postgresql://localhost:5432/url
+

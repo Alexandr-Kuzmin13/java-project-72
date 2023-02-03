@@ -12,7 +12,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 public class App {
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "7000");
+        String port = System.getenv().getOrDefault("PORT", "4000");
         return Integer.parseInt(port);
 
     }
@@ -41,9 +41,9 @@ public class App {
     private static void addRoutes(Javalin app) {
 
         app.get("/", UrlController.newUrl);
-        //app.post("/urls", UrlController.createUrl);
+        app.post("/urls", UrlController.createUrl);
         app.get("/urls", UrlController.listUrls);
-        //app.get("/urls/{id}", UrlController.showUrl);
+        app.get("/urls/{id}", UrlController.showUrl);
 
         /*app.routes(() -> {
             path("urls", () -> {

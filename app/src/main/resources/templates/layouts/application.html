@@ -24,6 +24,17 @@
     <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
     <section layout:fragment="content"></section>
 </div>
+<!--<main class="flex-grow-1">
+    <div
+            th:if="${session.flash}"
+            th:class="'rounded-0 m-0 alert alert-dismissible fade show alert-' + ${ctx.consumeSessionAttribute('flash-type')}"
+            role="alert"
+    >
+        <p class="m-0" th:text="${ctx.consumeSessionAttribute('flash')}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <section layout:fragment="content"></section>
+</main>-->
 </body>
 </html>
 

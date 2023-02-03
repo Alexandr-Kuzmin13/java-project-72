@@ -21,7 +21,7 @@ application {
 
 dependencies {
     implementation 'io.javalin:javalin:4.1.0'
-    implementation 'org.slf4j:slf4j-simple:1.7.32'
+    implementation 'org.slf4j:slf4j-simple:1.7.31'
 
     implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
@@ -33,8 +33,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     implementation 'com.konghq:unirest-java:3.13.0'
 
-    implementation 'com.h2database:h2:1.4.200'
-    implementation 'org.postgresql:postgresql:42.4.3'
+    implementation 'com.h2database:h2:2.1.210'
+    implementation 'org.postgresql:postgresql:42.3.3'
 
     implementation 'io.ebean:ebean:12.12.1'
     implementation 'io.ebean:ebean-ddl-generator:12.12.1'

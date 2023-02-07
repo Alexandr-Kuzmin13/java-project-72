@@ -2,18 +2,18 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/application.html}">
 
-<section layout:fragment="header">
-    Страницы
-</section>
-
 <section layout:fragment="content">
 
-    <table class="table table-striped mt-5">
+    <div class="container-lg mt-5">
+        <h1>Сайты</h1>
+
+    <table class="table table-bordered table-hover mt-3">
         <thead>
         <tr>
             <th class="col-1">ID</th>
-            <th class="col-3">Страница</th>
-            <th class="col-2">Дата создания</th>
+            <th class="col-2">Имя</th>
+            <th class="col-3">Последняя проверка</th>
+            <th class="col-4">Код ответа</th>
         </tr>
         </thead>
         <tbody>
@@ -22,12 +22,15 @@
             <td>
                 <a th:href="@{/urls/{id}(id=*{getId()})}" th:text="${#strings.abbreviate(url.getName(), 30)}"></a>
             </td>
-            <td th:text="${#temporals.format(url.getCreatedAt(), 'yyyy/MM/dd HH:mm')}"></td>
+            <td th:if="${urlCheckChoice.get(url.getName())} != null" th:text="${#temporals.format(urlCheckChoice.get(url.getName()).getCreatedAt(), 'yyyy/MM/dd HH:mm')}"></td>
+            <td th:if="${urlCheckChoice.get(url.getName())} != null" th:text="${urlCheckChoice.get(url.getName()).getStatusCode()}"></td>
+            <td th:if="${urlCheckChoice.get(url.getName())} == null" ></td>
+            <td th:if="${urlCheckChoice.get(url.getName())} == null" ></td>
         </tr>
         </tbody>
     </table>
 
-    <!--<nav aria-label="Page navigation" th:if="${#lists.size(pages)}">
+    <nav aria-label="Page navigation" th:if="${#lists.size(pages)}">
         <ul class="pagination justify-content-center mt-5">
             <li th:class="'page-item' + ${currentPage <= 1 ? ' disabled' : ''}">
                 <a class="page-link" th:href="@{/urls(page=${currentPage - 1},term=${term})}">Previous</a>
@@ -39,7 +42,8 @@
                 <a class="page-link" th:href="@{/urls(page=${currentPage + 1},)}">Next</a>
             </li>
         </ul>
-    </nav>-->
+    </nav>
+    </div>
 </section>
 
 </html>

@@ -35,6 +35,7 @@ dependencies {
 
     implementation 'com.h2database:h2:2.1.210'
     implementation 'org.postgresql:postgresql:42.3.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
     implementation 'io.ebean:ebean:12.12.1'
     implementation 'io.ebean:ebean-ddl-generator:12.12.1'

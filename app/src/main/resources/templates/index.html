@@ -2,25 +2,23 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/application.html}">
 
-<!--<div class="invalid-feedback" layout:fragment="validation-errors">
-    <ul>
-        <li th:each="error : ${#object}" th:text="${error.getMessage()}"></li>
-    </ul>
-</div>-->
-
-<section layout:fragment="header">
-    Создание страницы
-</section>
-
 <section layout:fragment="content">
-    <form th:object="${url}" action="/urls" method="post">
-        <div class="mb-3">
-            <label for="name" class="form-label">Наименование</label>
-            <input type="text" class="form-control" id="name" name="name" th:value="*{name}" placeholder="Введите URL страницы">
-<!--            <div layout:fragment="validation-errors" th:object="${errors.name}"></div>-->
+    <div class="container-fluid bg-dark p-5">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto text-white">
+                <h1 class="display-3 mb-0">Анализатор страниц</h1>
+                <p class="lead">Бесплатно проверяйте сайты на SEO пригодность</p>
+                <form th:object="${url}" action="/urls" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Наименование</label>
+                        <input type="text" class="form-control" id="name" name="name" th:value="*{name}" placeholder="Введите URL страницы">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                </form>
+                <p class="mt-2 mb-0 text-muted">Пример: https://www.example.com</p>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Создать</button>
-    </form>
+    </div>
 </section>
 
 </html>

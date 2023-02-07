@@ -1,6 +1,6 @@
 package hexlet.code;
 
-//import hexlet.code.controllers.RootController;
+import hexlet.code.controllers.RootController;
 import hexlet.code.controllers.UrlController;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
@@ -9,10 +9,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import static io.javalin.apibuilder.ApiBuilder.path;
+import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.get;
+
 public class App {
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "4000");
+        String port = System.getenv().getOrDefault("PORT", "5000");
         return Integer.parseInt(port);
 
     }
@@ -40,19 +44,22 @@ public class App {
 
     private static void addRoutes(Javalin app) {
 
-        app.get("/", UrlController.newUrl);
-        app.post("/urls", UrlController.createUrl);
-        app.get("/urls", UrlController.listUrls);
-        app.get("/urls/{id}", UrlController.showUrl);
+        app.get("/", RootController.newUrl);
 
-        /*app.routes(() -> {
+        app.routes(() -> {
+
             path("urls", () -> {
+
                 get(UrlController.listUrls);
+                post(UrlController.createUrl);
+
                 path("{id}", () -> {
+
                     get(UrlController.showUrl);
+                    post("checks", UrlController.checkUrl);
                 });
             });
-        });*/
+        });
     }
 
     public static Javalin getApp() {

@@ -4,27 +4,29 @@
 #    password: Polk_8814
 #    url: jdbc:postgresql://localhost:5432/url
 
-ebean:
-  migration:
-    run: true
-datasource:
-  db:
-    username: sa
-    password: sa
-    #url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE;DB_CLOSE_ON_EXIT=FALSE
-    url: jdbc:h2:mem:test_db
-
-#ebean:
-#  migration:
-#    run: true
 #datasource:
 #  default: ${APP_ENV}
 #  development:
-#    username: sa
-#    password: sa
-#    url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE;DB_CLOSE_ON_EXIT=FALSE
+#    username: ""
+#    password: ""
+#    url: "jdbc:h2:~/test"
 #  production:
-#    username: rusglagol
-#    password: Polk_8814
-#    url: jdbc:postgresql://localhost:5432/url
+#    username: ${PGUSER}
+#    password: ${PGPASSWORD}
+#    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+
+datasource:
+  db:
+  development:
+    username: ""
+    password: ""
+    url: "jdbc:h2:~/test"
+
+ebean:
+  development:
+    migration:
+      run: true
+  production:
+    migration:
+      run: true
 

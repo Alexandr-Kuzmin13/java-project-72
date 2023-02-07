@@ -28,7 +28,7 @@ public final class AppTest {
     private static final int RESPONSE_NUMBER_200 = 200;
     private static final int RESPONSE_NUMBER_302 = 302;
     private static final String FIXTURES_DIRECTORY = "src/test/resources/fixtures";
-    private final int PAGE = 10;
+    private static final int PAGE = 10;
 
     private static Javalin app;
     private static String baseUrl;

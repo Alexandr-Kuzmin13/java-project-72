@@ -168,18 +168,27 @@ public final class AppTest {
             MockWebServer mockServer = new MockWebServer();
             String samplePageUrl = mockServer.url("/").toString();
             mockServer.enqueue(new MockResponse().setBody(samplePage));
+            
+            HttpResponse<String> response = Unirest
+                    .post(baseUrl + "/urls/")
+                    .field("url", samplePageUrl)
+                    .asEmpty();
 
             Url url = new QUrl()
                     .name.equalTo(samplePageUrl.substring(0, samplePageUrl.length() - 1))
                     .findOne();
 
             assertThat(url).isNotNull();
+            
+            HttpResponse<String> response1 = Unirest
+                    .post(baseUrl + "/urls/" + url.getId() + "/checks")
+                    .asEmpty();
 
-            HttpResponse<String> response = Unirest
+            HttpResponse<String> response2 = Unirest
                     .get(baseUrl + "/urls/" + url.getId())
                     .asString();
 
-            assertThat(response.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
+            assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
 
             UrlCheck check = new QUrlCheck()
                     .findList().get(0);
@@ -187,9 +196,9 @@ public final class AppTest {
             assertThat(check).isNotNull();
             assertThat(check.getUrl().getId()).isEqualTo(url.getId());
 
-            assertThat(response.getBody()).contains("Sample title");
-            assertThat(response.getBody()).contains("Sample description");
-            assertThat(response.getBody()).contains("Sample header");
+            assertThat(response2.getBody()).contains("Sample title");
+            assertThat(response2.getBody()).contains("Sample description");
+            assertThat(response2.getBody()).contains("Sample header");
 
             mockServer.shutdown();
         }

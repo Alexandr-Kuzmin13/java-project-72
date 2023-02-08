@@ -4,24 +4,24 @@
 #    password: Polk_8814
 #    url: jdbc:postgresql://localhost:5432/url
 
-datasource:
-  default: ${APP_ENV}
-  development:
-    username: ""
-    password: ""
-    url: "jdbc:h2:~/test"
-  production:
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
-    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
-
 #datasource:
-#  db:
+#  default: ${APP_ENV}
 #  development:
 #    username: ""
 #    password: ""
 #    url: "jdbc:h2:~/test"
-#
+#  production:
+#    username: ${PGUSER}
+#    password: ${PGPASSWORD}
+#    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+
+datasource:
+  db:
+  development:
+    username: ""
+    password: ""
+    url: "jdbc:h2:~/test"
+
 ebean:
   development:
     migration:

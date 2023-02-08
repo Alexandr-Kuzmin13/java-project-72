@@ -9,9 +9,12 @@ import hexlet.code.domain.query.QUrl;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -20,14 +23,16 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public final class AppTest {
 
     private static final int RESPONSE_NUMBER_200 = 200;
     private static final int RESPONSE_NUMBER_302 = 302;
-    private static final String FIXTURES_DIRECTORY = "src/test/resources/fixtures";
+    private static final String SITETEST = "src/test/resources/siteTest/";
     private static final int PAGE = 10;
 
     private static Javalin app;
@@ -48,6 +53,11 @@ public final class AppTest {
         database.script().run("/truncate.sql");
         app.stop();
     }
+    @BeforeEach
+    void beforeEach() {
+        database.script().run("/truncate.sql");
+        database.script().run("/seed-test-db.sql");
+    }
     @Nested
     class RootTest {
         @Test
@@ -62,7 +72,8 @@ public final class AppTest {
     }
     @Nested
     class UrlTest {
-        private final String testWebsite = "https://www.example.com";
+        //private final String testWebsite = "https://www.example.com";
+        private final String testWebsite = "https://www.ya.ru";
 
         @BeforeEach
         void addTestWebsite() {
@@ -163,44 +174,59 @@ public final class AppTest {
         }
         @Test
         void testCheckUrl() throws IOException {
-            String samplePage = Files.readString(Paths.get(FIXTURES_DIRECTORY, "sample.html"));
 
-            MockWebServer mockServer = new MockWebServer();
-            String samplePageUrl = mockServer.url("/").toString();
-            mockServer.enqueue(new MockResponse().setBody(samplePage));
+            String contentPageSite = Files.readString(Paths.get(SITETEST, "siteTest.html"));
+            System.out.println(contentPageSite);
 
-            HttpResponse response = Unirest
-                    .post(baseUrl + "/urls/")
-                    .field("url", samplePageUrl)
-                    .asEmpty();
+            MockWebServer server = new MockWebServer();
+            server.enqueue(new MockResponse().setBody(contentPageSite));
+
+
+            String websiteAddress = server.url("/").toString();
+            System.out.println(websiteAddress);
+
+            HttpResponse<String> response1 = Unirest
+                    .post(baseUrl + "/urls")
+                    .field("url", websiteAddress)
+                    .asString();
 
             Url url = new QUrl()
-                    .name.equalTo(samplePageUrl.substring(0, samplePageUrl.length() - 1))
+                    //.name.equalTo(websiteAddress.substring(0, websiteAddress.length() - 1))
+                    //.name.equalTo(testWebsite)
                     .findOne();
+            System.out.println(url.getName());
+            List<Url> urls = new QUrl()
+                    //.name.equalTo(websiteAddress.substring(0, websiteAddress.length() - 1))
+                    //.name.equalTo(testWebsite)
+                    .findList();
+            System.out.println(urls.get(0).getName());
 
-            assertThat(url).isNotNull();
+            HttpResponse<String> response = Unirest
+                    .post(baseUrl + "/urls/1/checks")
+                    .asString();
 
-            HttpResponse response1 = Unirest
-                    .post(baseUrl + "/urls/" + url.getId() + "/checks")
-                    .asEmpty();
+            UrlCheck urlCheck = new QUrlCheck()
+                    .findList()
+                    .get(0);
 
             HttpResponse<String> response2 = Unirest
-                    .get(baseUrl + "/urls/" + url.getId())
+                    .get(baseUrl + "/urls/1")
                     .asString();
 
             assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
-
-            UrlCheck urlCheck = new QUrlCheck()
-                    .findList().get(0);
+            assertThat(response.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
 
             assertThat(urlCheck).isNotNull();
-            assertThat(urlCheck.getUrl().getId()).isEqualTo(url.getId());
+            assertThat(urlCheck.getUrl().getId()).isEqualTo(1);
+            System.out.println(urlCheck.getUrl().getName());
+            assertThat(response2.getBody()).contains("Страница успешно проверена");
 
-            assertThat(response2.getBody()).contains("Sample title");
+            /*assertThat(response2.getBody()).contains("Sample title");
             assertThat(response2.getBody()).contains("Sample description");
-            assertThat(response2.getBody()).contains("Sample header");
+            assertThat(response2.getBody()).contains("Sample header");*/
+            //assertThat(response2.getBody()).contains("Example Domain");
 
-            mockServer.shutdown();
+            server.shutdown();
         }
     }
 

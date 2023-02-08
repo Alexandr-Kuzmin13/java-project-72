@@ -126,7 +126,7 @@ public final class AppTest {
         @Test
         void testCreateUrlWithIncorrectName1() {
 
-            String name = "";
+            String name = "test";
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")

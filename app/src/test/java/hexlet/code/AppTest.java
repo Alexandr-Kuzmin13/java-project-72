@@ -1,7 +1,7 @@
 package hexlet.code;
 
-//import hexlet.code.domain.UrlCheck;
-//import hexlet.code.domain.query.QUrlCheck;
+import hexlet.code.domain.UrlCheck;
+import hexlet.code.domain.query.QUrlCheck;
 import io.ebean.DB;
 import io.ebean.Database;
 import hexlet.code.domain.Url;
@@ -9,17 +9,17 @@ import hexlet.code.domain.query.QUrl;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-//import okhttp3.mockwebserver.MockResponse;
-//import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-//import java.io.IOException;
-//import java.nio.file.Files;
-//import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -161,7 +161,7 @@ public final class AppTest {
             assertThat(content).contains(testWebsite);
             assertThat(content).contains("Страница уже существует");
         }
-        /*@Test
+        @Test
         void testCheckUrl() throws IOException {
             String samplePage = Files.readString(Paths.get(FIXTURES_DIRECTORY, "sample.html"));
 
@@ -201,7 +201,7 @@ public final class AppTest {
             assertThat(response2.getBody()).contains("Sample header");
 
             mockServer.shutdown();
-        }*/
+        }
     }
 
     @Nested

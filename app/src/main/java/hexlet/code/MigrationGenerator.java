@@ -11,7 +11,7 @@ public final class MigrationGenerator {
 
         DbMigration dbMigration = DbMigration.create();
 
-        //dbMigration.addPlatform(Platform.POSTGRES, "postgres");
+        dbMigration.addPlatform(Platform.POSTGRES, "postgres");
         dbMigration.addPlatform(Platform.H2, "h2");
 
         dbMigration.generateMigration();

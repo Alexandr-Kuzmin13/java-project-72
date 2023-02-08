@@ -169,10 +169,10 @@ public final class AppTest {
             String samplePageUrl = mockServer.url("/").toString();
             mockServer.enqueue(new MockResponse().setBody(samplePage));
 
-            HttpResponse<String> response = Unirest
+            /*HttpResponse response = Unirest
                     .post(baseUrl + "/urls/")
                     .field("url", samplePageUrl)
-                    .asEmpty();
+                    .asEmpty();*/
 
             Url url = new QUrl()
                     .name.equalTo(samplePageUrl.substring(0, samplePageUrl.length() - 1))
@@ -180,7 +180,7 @@ public final class AppTest {
 
             assertThat(url).isNotNull();
 
-            HttpResponse<String> response1 = Unirest
+            HttpResponse response1 = Unirest
                     .post(baseUrl + "/urls/" + url.getId() + "/checks")
                     .asEmpty();
 
@@ -190,11 +190,11 @@ public final class AppTest {
 
             assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
 
-            UrlCheck check = new QUrlCheck()
+            UrlCheck urlCheck = new QUrlCheck()
                     .findList().get(0);
 
-            assertThat(check).isNotNull();
-            assertThat(check.getUrl().getId()).isEqualTo(url.getId());
+            assertThat(urlCheck).isNotNull();
+            assertThat(urlCheck.getUrl().getId()).isEqualTo(url.getId());
 
             assertThat(response2.getBody()).contains("Sample title");
             assertThat(response2.getBody()).contains("Sample description");

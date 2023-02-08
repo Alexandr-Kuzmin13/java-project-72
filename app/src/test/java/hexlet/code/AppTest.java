@@ -133,7 +133,7 @@ public final class AppTest {
                     .field("name", name)
                     .asString();
 
-            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/");
+            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("");
 
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/")
@@ -151,7 +151,7 @@ public final class AppTest {
                     .field("url", testWebsite)
                     .asString();
 
-            assertThat(responsePost1.getHeaders().getFirst("Location")).isEqualTo("/urls");
+            assertThat(responsePost1.getHeaders().getFirst("Location")).isEqualTo("");
 
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")

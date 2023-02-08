@@ -21,13 +21,13 @@ public class App {
 
     }
 
-    /*private static String getMode() {
+    private static String getMode() {
         return System.getenv().getOrDefault("APP_ENV", "development");
     }
 
     private static boolean isProduction() {
         return getMode().equals("production");
-    }*/
+    }
 
     private static TemplateEngine getTemplateEngine() {
         TemplateEngine templateEngine = new TemplateEngine();
@@ -64,9 +64,9 @@ public class App {
 
     public static Javalin getApp() {
         Javalin app = Javalin.create(config -> {
-            /*if (!isProduction()) {
+            if (!isProduction()) {
                 config.enableDevLogging();
-            }*/
+            }
             config.enableWebjars();
             JavalinThymeleaf.configure(getTemplateEngine());
         });

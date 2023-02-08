@@ -6,7 +6,6 @@ import io.ebean.DB;
 import io.ebean.Database;
 import hexlet.code.domain.Url;
 import hexlet.code.domain.query.QUrl;
-import io.ebean.SqlRow;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;

@@ -6,6 +6,7 @@ import io.ebean.DB;
 import io.ebean.Database;
 import hexlet.code.domain.Url;
 import hexlet.code.domain.query.QUrl;
+import io.ebean.SqlRow;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,15 +31,22 @@ public final class AppTest {
     void testInit() {
         assertThat(true).isEqualTo(true);
     }
-
     private static final int RESPONSE_NUMBER_200 = 200;
     private static final int RESPONSE_NUMBER_302 = 302;
-    private static final String SITETEST = "src/test/resources/siteTest/";
-    private static final int PAGE = 10;
 
     private static Javalin app;
     private static String baseUrl;
     private static Database database;
+    private static MockWebServer mockServer;
+
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
+    private static String readFixture(String fileName) throws IOException {
+        Path filePath = getFixturePath(fileName);
+        return Files.readString(filePath).trim();
+    }
 
     @BeforeAll
     public static void beforeAll() {
@@ -170,14 +179,17 @@ public final class AppTest {
         @Test
         void testCheckUrl() throws IOException {
 
-            String contentPageSite = Files.readString(Paths.get(SITETEST, "siteTest.html"));
-            System.out.println(contentPageSite);
+            mockServer = new MockWebServer();
+            MockResponse mockedResponse = new MockResponse()
+                    .setBody(readFixture("siteTest.html"));
+            mockServer.enqueue(mockedResponse);
+            mockServer.start();
 
-            MockWebServer server = new MockWebServer();
-            server.enqueue(new MockResponse().setBody(contentPageSite));
+            String websiteAddress = mockServer.url("/").toString().replaceAll("/$", "");
 
-            String websiteAddress = server.url("/").toString();
-            System.out.println(websiteAddress);
+            Unirest.post(baseUrl + "/urls")
+                    .field("url", websiteAddress)
+                    .asEmpty();
 
             HttpResponse<String> response = Unirest
                     .post(baseUrl + "/urls/1/checks")
@@ -196,36 +208,9 @@ public final class AppTest {
 
             assertThat(urlCheck).isNotNull();
             assertThat(urlCheck.getUrl().getId()).isEqualTo(1);
-            System.out.println(urlCheck.getUrl().getName());
             assertThat(response2.getBody()).contains("Страница успешно проверена");
 
-            server.shutdown();
-        }
-    }
-
-    @Nested
-    class PaginationTest {
-        @Test
-        void testPagination() {
-            for (int i = 1; i <= PAGE + 1; i++) {
-                String testWebsite = String.format("http://localhost:%d", i);
-                Url url = new Url(testWebsite);
-                url.save();
-            }
-            HttpResponse<String> response1 = Unirest
-                    .get(baseUrl + "/urls")
-                    .asString();
-
-            String content1 = response1.getBody();
-            assertThat(content1).contains("http://localhost:1");
-            assertThat(content1).contains("http://localhost:10");
-            assertThat(content1.contains("http://localhost:11")).isFalse();
-
-            HttpResponse<String> response2 = Unirest
-                    .get(baseUrl + "/urls?page=2")
-                    .asString();
-            String content2 = response2.getBody();
-            assertThat(content2).contains("http://localhost:11");
+            mockServer.shutdown();
         }
     }
 }

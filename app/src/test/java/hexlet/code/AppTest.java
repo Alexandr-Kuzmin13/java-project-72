@@ -62,7 +62,7 @@ public final class AppTest {
     }
     @Nested
     class UrlTest {
-        private final String testWebsite = "https://www.thymeleaf.org";
+        private final String testWebsite = "https://www.example.com";
 
         @BeforeEach
         void addTestWebsite() {
@@ -126,7 +126,7 @@ public final class AppTest {
         @Test
         void testCreateUrlWithIncorrectName1() {
 
-            String name = "";
+            String name = "test";
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
@@ -146,12 +146,12 @@ public final class AppTest {
         @Test
         void testCreateUrlAlreadyExistsName() {
 
-            HttpResponse<String> responsePost1 = Unirest
+            HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("url", testWebsite)
+                    .field("name", testWebsite)
                     .asString();
 
-            assertThat(responsePost1.getHeaders().getFirst("Location")).isEqualTo("/urls");
+            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/urls");
 
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
@@ -169,17 +169,26 @@ public final class AppTest {
             String samplePageUrl = mockServer.url("/").toString();
             mockServer.enqueue(new MockResponse().setBody(samplePage));
 
+            HttpResponse<String> response = Unirest
+                    .post(baseUrl + "/urls/")
+                    .field("url", samplePageUrl)
+                    .asEmpty();
+
             Url url = new QUrl()
                     .name.equalTo(samplePageUrl.substring(0, samplePageUrl.length() - 1))
                     .findOne();
 
             assertThat(url).isNotNull();
 
-            HttpResponse<String> response = Unirest
+            HttpResponse<String> response1 = Unirest
+                    .post(baseUrl + "/urls/" + url.getId() + "/checks")
+                    .asEmpty();
+
+            HttpResponse<String> response2 = Unirest
                     .get(baseUrl + "/urls/" + url.getId())
                     .asString();
 
-            assertThat(response.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
+            assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
 
             UrlCheck check = new QUrlCheck()
                     .findList().get(0);
@@ -187,9 +196,9 @@ public final class AppTest {
             assertThat(check).isNotNull();
             assertThat(check.getUrl().getId()).isEqualTo(url.getId());
 
-            assertThat(response.getBody()).contains("Sample title");
-            assertThat(response.getBody()).contains("Sample description");
-            assertThat(response.getBody()).contains("Sample header");
+            assertThat(response2.getBody()).contains("Sample title");
+            assertThat(response2.getBody()).contains("Sample description");
+            assertThat(response2.getBody()).contains("Sample header");
 
             mockServer.shutdown();
         }

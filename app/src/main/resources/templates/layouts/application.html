@@ -2,8 +2,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <html>
-
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Анализатор страниц</title>
@@ -11,11 +10,11 @@
           rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
           crossorigin="anonymous">
-</head>
+  </head>
 
-<body class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="/">Анализатор страниц</a>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -25,9 +24,10 @@
             </div>
         </div>
     </div>
-</nav>
+  </nav>
 
-<div class="container mt-3">
+  <main class="flex-grow-1">
+
     <div
             th:if="${session.flash}"
             th:class="'rounded-0 m-0 alert alert-dismissible fade show alert-' + ${ctx.consumeSessionAttribute('flash-type')}"
@@ -36,10 +36,16 @@
         <p class="m-0" th:text="${ctx.consumeSessionAttribute('flash')}"></p>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <section layout:fragment="content"></section>
-</div>
+    <!--<div class="container mt-4">
+        <h1 class="my-4">
+            <section layout:fragment="header"></section>
+        </h1>
+        <section layout:fragment="content"></section>
+    </div>-->
+      <section layout:fragment="content"></section>
 
-</body>
+  </main>
 
+  </body>
 </html>
 

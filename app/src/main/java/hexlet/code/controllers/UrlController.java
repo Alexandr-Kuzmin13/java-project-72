@@ -83,11 +83,9 @@ public class UrlController {
                 newName = urlName.getProtocol() + "://" + urlName.getHost() + ":" + urlName.getPort();
             }
         } catch (MalformedURLException ignored) {
-            Url url = new Url(name);
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.attribute("url", url);
-            ctx.render("index.html");
+            ctx.redirect("/");
             return;
         }
 
@@ -98,8 +96,7 @@ public class UrlController {
         if (errorUrl != null) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.attribute("url", errorUrl);
-            ctx.render("index.html");
+            ctx.redirect("/urls");
             return;
         }
 

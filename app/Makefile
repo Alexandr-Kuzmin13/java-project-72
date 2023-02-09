@@ -1,5 +1,5 @@
 setup:
-	gradle wrapper --gradle-version 7.5.1
+	gradle wrapper --gradle-version 7.4
 
 clean:
 	./gradlew clean
@@ -14,7 +14,7 @@ install:
 	./gradlew install
 
 start-dist:
-	APP_ENV=production ./build/install/java-project-72/bin/java-project-72
+	APP_ENV=production ./build/install/app/bin/app
 
 generate-migrations:
 	./gradlew generateMigrations
@@ -32,9 +32,9 @@ check-updates:
 	./gradlew dependencyUpdates
 
 image-build:
-	docker build -t hexletcomponents/java-project-72:latest .
+	docker build -t hexletcomponents/app:latest .
 
 image-push:
-	docker push hexletcomponents/java-project-72:latest
+	docker push hexletcomponents/app:latest
 
 .PHONY: build

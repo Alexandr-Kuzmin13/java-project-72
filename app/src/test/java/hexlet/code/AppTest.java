@@ -6,7 +6,6 @@ import io.ebean.DB;
 import io.ebean.Database;
 import hexlet.code.domain.Url;
 import hexlet.code.domain.query.QUrl;
-import io.ebean.SqlRow;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -39,12 +38,12 @@ public final class AppTest {
     private static Database database;
     private static MockWebServer mockServer;
 
-    private static Path getFixturePath(String fileName) {
-        return Paths.get("src", "test", "resources", "fixtures", fileName)
+    private static Path getFixturePath() {
+        return Paths.get("src", "test", "resources", "fixtures", "siteTest.html")
                 .toAbsolutePath().normalize();
     }
-    private static String readFixture(String fileName) throws IOException {
-        Path filePath = getFixturePath(fileName);
+    private static String readFixture() throws IOException {
+        Path filePath = getFixturePath();
         return Files.readString(filePath).trim();
     }
 
@@ -111,7 +110,7 @@ public final class AppTest {
         @Test
         void testCreateUrl() {
 
-            String name = "https://www.ebean.io";
+            String name = "https://www.google.com";
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
@@ -181,34 +180,51 @@ public final class AppTest {
 
             mockServer = new MockWebServer();
             MockResponse mockedResponse = new MockResponse()
-                    .setBody(readFixture("siteTest.html"));
+                    .setBody(readFixture());
             mockServer.enqueue(mockedResponse);
             mockServer.start();
 
             String websiteAddress = mockServer.url("/").toString().replaceAll("/$", "");
+            System.out.println(websiteAddress);
 
-            Unirest.post(baseUrl + "/urls")
+            Unirest
+                    .post(baseUrl + "/urls")
                     .field("url", websiteAddress)
                     .asEmpty();
 
+            HttpResponse<String> responsePost = Unirest
+                    .post(baseUrl + "/urls")
+                    .field("name", websiteAddress)
+                    .asString();
+
+            assertThat(responsePost.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
+            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/urls");
+
             HttpResponse<String> response = Unirest
                     .post(baseUrl + "/urls/1/checks")
+                    .asString();
+
+            HttpResponse<String> response2 = Unirest
+                    .get(baseUrl + "/urls/1")
                     .asString();
 
             UrlCheck urlCheck = new QUrlCheck()
                     .findList()
                     .get(0);
 
-            HttpResponse<String> response2 = Unirest
-                    .get(baseUrl + "/urls/1")
-                    .asString();
-
-            assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
             assertThat(response.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
+            assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
+            assertThat(response2.getBody()).contains("Страница успешно проверена");
 
             assertThat(urlCheck).isNotNull();
             assertThat(urlCheck.getUrl().getId()).isEqualTo(1);
-            assertThat(response2.getBody()).contains("Страница успешно проверена");
+
+            Url actualUrl = new QUrl()
+                    .name.equalTo(websiteAddress)
+                    .findOne();
+
+            assertThat(actualUrl).isNotNull();
+            assertThat(actualUrl.getName()).isEqualTo(websiteAddress);
 
             mockServer.shutdown();
         }

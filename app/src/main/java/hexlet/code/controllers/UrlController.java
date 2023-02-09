@@ -72,6 +72,10 @@ public class UrlController {
     public static Handler createUrl = ctx -> {
         String name = ctx.formParam("name");
 
+        if (name == null) {
+            throw new NotFoundResponse();
+        }
+
         String newName = "";
 
         try {

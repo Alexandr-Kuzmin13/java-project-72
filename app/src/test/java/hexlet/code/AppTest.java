@@ -114,7 +114,7 @@ public final class AppTest {
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("name", name)
+                    .field("url", name)
                     .asString();
 
             assertThat(responsePost.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
@@ -162,7 +162,7 @@ public final class AppTest {
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("name", testWebsite)
+                    .field("url", testWebsite)
                     .asString();
 
             assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/urls");
@@ -194,7 +194,7 @@ public final class AppTest {
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("name", websiteAddress)
+                    .field("url", websiteAddress)
                     .asString();
 
             assertThat(responsePost.getStatus()).isEqualTo(RESPONSE_NUMBER_302);

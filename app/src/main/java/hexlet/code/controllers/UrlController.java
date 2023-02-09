@@ -138,9 +138,9 @@ public class UrlController {
                 .id.equalTo(id)
                 .findOne();
 
-        if (url == null) {
-            throw new NotFoundResponse();
-        }
+//         if (url == null) {
+//             throw new NotFoundResponse();
+//         }
 
         try {
             HttpResponse<String> response = Unirest

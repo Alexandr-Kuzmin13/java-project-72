@@ -185,39 +185,11 @@ public final class AppTest {
             mockServer.start();
 
             String websiteAddress = mockServer.url("/").toString().replaceAll("/$", "");
-            System.out.println(websiteAddress);
 
             Unirest
-                    .post(baseUrl + "/urls")
+                    .post(baseUrl + "/urls/")
                     .field("url", websiteAddress)
                     .asEmpty();
-
-            HttpResponse<String> responsePost = Unirest
-                    .post(baseUrl + "/urls")
-                    .field("url", websiteAddress)
-                    .asString();
-
-            assertThat(responsePost.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
-            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/urls");
-
-            HttpResponse<String> response = Unirest
-                    .post(baseUrl + "/urls/1/checks")
-                    .asString();
-
-            HttpResponse<String> response2 = Unirest
-                    .get(baseUrl + "/urls/1")
-                    .asString();
-
-            UrlCheck urlCheck = new QUrlCheck()
-                    .findList()
-                    .get(0);
-
-            assertThat(response.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
-            assertThat(response2.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
-            assertThat(response2.getBody()).contains("Страница успешно проверена");
-
-            assertThat(urlCheck).isNotNull();
-            assertThat(urlCheck.getUrl().getId()).isEqualTo(1);
 
             Url actualUrl = new QUrl()
                     .name.equalTo(websiteAddress)
@@ -225,6 +197,36 @@ public final class AppTest {
 
             assertThat(actualUrl).isNotNull();
             assertThat(actualUrl.getName()).isEqualTo(websiteAddress);
+
+            HttpResponse<String> responsePost = Unirest
+                    .post(baseUrl + "/urls/")
+                    .field("url", websiteAddress)
+                    .asString();
+
+            assertThat(responsePost.getStatus()).isEqualTo(RESPONSE_NUMBER_302);
+            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/urls");
+
+            Unirest
+                    .post(baseUrl + "/urls/" + actualUrl.getId() + "/checks")
+                    .asEmpty();
+
+            HttpResponse<String> response = Unirest
+                    .get(baseUrl + "/urls/" + actualUrl.getId())
+                    .asString();
+
+            assertThat(response.getStatus()).isEqualTo(RESPONSE_NUMBER_200);
+            assertThat(response.getBody()).contains("Страница успешно проверена");
+
+            UrlCheck urlCheck = new QUrlCheck()
+                    .findList()
+                    .get(0);
+
+            assertThat(urlCheck).isNotNull();
+            assertThat(urlCheck.getUrl().getId()).isEqualTo(actualUrl.getId());
+
+            assertThat(response.getBody()).contains("Sample title");
+            assertThat(response.getBody()).contains("Sample description");
+            assertThat(response.getBody()).contains("Sample header");
 
             mockServer.shutdown();
         }

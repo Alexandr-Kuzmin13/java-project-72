@@ -11,7 +11,7 @@
                 <form th:object="${url}" action="/urls" method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Наименование</label>
-                        <input type="text" class="form-control" id="name" name="name" th:value="*{name}" placeholder="Введите URL страницы">
+                        <input type="text" class="form-control" id="name" name="url" th:value="*{name}" placeholder="Введите URL страницы">
                     </div>
                     <button type="submit" class="btn btn-primary">Создать</button>
                 </form>

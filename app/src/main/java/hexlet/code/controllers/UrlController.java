@@ -70,7 +70,7 @@ public class UrlController {
     };
 
     public static Handler createUrl = ctx -> {
-        String name = ctx.formParam("name");
+        String name = ctx.formParam("url");
 
         String newName = "";
 

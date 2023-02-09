@@ -144,7 +144,7 @@ public final class AppTest {
 
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("name", name)
+                    .field("url", name)
                     .asString();
 
             assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/");

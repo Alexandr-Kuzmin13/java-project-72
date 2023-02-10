@@ -5,10 +5,10 @@ datasource:
 #     password: ""
 #     url: "jdbc:h2:~/test"
   db:
-    production:
-      username: ${PGUSER}
-      password: ${PGPASSWORD}
-      url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+#     production:
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
 
 ebean:
   development:

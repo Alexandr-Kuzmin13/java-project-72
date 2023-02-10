@@ -17,35 +17,21 @@
 #     migration:
 #       run: true
       
-# datasource:
-#   default: ${APP_ENV}
-#   development:
-#     username: sa
-#     password: sa
-#     url: jdbc:h2:mem:dev_db
-#   production:
-#     username: ${JDBC_DATABASE_USERNAME}
-#     password: ${JDBC_DATABASE_PASSWORD}
-#     url: ${JDBC_DATABASE_URL}
-
-# ebean:
-#   migration:
-#     run: true
-
-ebean:
-  ddl:
-    run: true
-    generate: true
-
 datasource:
   default: ${APP_ENV}
-
-  production:
-    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
-
   development:
-    username: sa
-    password: sa
-    url: jdbc:h2:mem:testDB
+    username: ""
+    password: ""
+    url: "jdbc:h2:~/test"
+  production:
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+    url: ${JDBC_DATABASE_URL}
+
+ebean:
+  development:
+    migration:
+      run: true
+  production:
+    migration:
+      run: true

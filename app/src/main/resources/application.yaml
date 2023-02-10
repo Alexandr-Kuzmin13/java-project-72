@@ -1,19 +1,19 @@
-#datasource:
-#  db:
-#    username: rusglagol
-#    password: Polk_8814
-#    url: jdbc:postgresql://localhost:5432/url
-
 datasource:
-  default: ${APP_ENV}
-  development:
-    username: ""
-    password: ""
-    url: "jdbc:h2:~/test"
-  production:
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
-    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+ db:
+   username: rusglagol
+   password: Polk_8814
+   url: jdbc:postgresql://localhost:5432/url
+
+# datasource:
+#   default: ${APP_ENV}
+#   development:
+#     username: ""
+#     password: ""
+#     url: "jdbc:h2:~/test"
+#   production:
+#     username: ${PGUSER}
+#     password: ${PGPASSWORD}
+#     url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
 
 #datasource:
 #  db:
@@ -22,11 +22,11 @@ datasource:
 #    password: ""
 #    url: "jdbc:h2:~/test"
 
-ebean:
-  development:
-    migration:
-      run: true
-  production:
-    migration:
-      run: true
+# ebean:
+#   development:
+#     migration:
+#       run: true
+#   production:
+#     migration:
+#       run: true
 

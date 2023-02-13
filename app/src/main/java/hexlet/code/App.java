@@ -15,18 +15,22 @@ import static io.javalin.apibuilder.ApiBuilder.get;
 
 public class App {
 
+    private static final String PORT_NUMBER = "5000";
+    private static final String DB_DEFAULT = "development";
+    private static final String DB_PRODUCTION = "production";
+
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "5000");
+        String port = System.getenv().getOrDefault("PORT", PORT_NUMBER);
         return Integer.parseInt(port);
 
     }
 
     private static String getMode() {
-        return System.getenv().getOrDefault("APP_ENV", "development");
+        return System.getenv().getOrDefault("APP_ENV", DB_DEFAULT);
     }
 
     private static boolean isProduction() {
-        return getMode().equals("production");
+        return getMode().equals(DB_PRODUCTION);
     }
 
     private static TemplateEngine getTemplateEngine() {

@@ -72,16 +72,10 @@ public class UrlController {
     public static Handler createUrl = ctx -> {
         String name = ctx.formParam("url");
 
-        String newName = "";
-
         try {
-            var urlName = new URL(name);
 
-            if (urlName.getPort() == -1) {
-                newName = urlName.getProtocol() + "://" + urlName.getHost();
-            } else {
-                newName = urlName.getProtocol() + "://" + urlName.getHost() + ":" + urlName.getPort();
-            }
+            new URL(name);
+
         } catch (MalformedURLException ignored) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
@@ -89,18 +83,24 @@ public class UrlController {
             return;
         }
 
-        Url errorUrl = new QUrl()
-                .name.equalTo(newName)
+        var urlName = new URL(name);
+
+        var newName = urlName.getProtocol() + "://" + urlName.getHost();
+
+        String normaliseName = urlName.getPort() == -1 ? newName : newName + ":" + urlName.getPort();
+
+        Url existingUrl = new QUrl()
+                .name.equalTo(normaliseName)
                 .findOne();
 
-        if (errorUrl != null) {
+        if (existingUrl != null) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect("/urls");
             return;
         }
 
-        Url url = new Url(newName);
+        Url url = new Url(normaliseName);
         url.save();
 
         ctx.sessionAttribute("flash", "Страница успешно добавлена");
@@ -115,15 +115,11 @@ public class UrlController {
                 .id.equalTo(id)
                 .findOne();
 
-        List<UrlCheck> urlChecks = new QUrlCheck()
-                .url.id.equalTo(id)
-                .orderBy()
-                .id.asc()
-                .findList();
-
         if (url == null) {
             throw new NotFoundResponse();
         }
+
+        List<UrlCheck> urlChecks = url.getUrlChecks();
 
         ctx.attribute("url", url);
         ctx.attribute("url_checks", urlChecks);

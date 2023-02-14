@@ -1,6 +1,6 @@
 FROM gradle:7.4-jdk17
 
-WORKDIR /
+WORKDIR /app
 
 COPY . /app
 

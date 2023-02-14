@@ -27,11 +27,18 @@ datasource:
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
     url: ${JDBC_DATABASE_URL}
-
 ebean:
-  development:
-    migration:
-      run: true
-  production:
-    migration:
-      run: true
+  ddl:
+    run: true
+    generate: true
+    seedSql: seed.sql
+  # migration:
+  #   run: true
+
+# ebean:
+#   development:
+#     migration:
+#       run: true
+#   production:
+#     migration:
+#       run: true

@@ -16,8 +16,8 @@ import static io.javalin.apibuilder.ApiBuilder.get;
 public class App {
 
     private static final String PORT_NUMBER = "5000";
-    private static final String DB_DEFAULT = "development";
-    private static final String DB_PRODUCTION = "production";
+    private static final String DEV = "development";
+    private static final String PROD = "production";
 
     private static int getPort() {
         String port = System.getenv().getOrDefault("PORT", PORT_NUMBER);
@@ -26,11 +26,11 @@ public class App {
     }
 
     private static String getMode() {
-        return System.getenv().getOrDefault("APP_ENV", DB_DEFAULT);
+        return System.getenv().getOrDefault("APP_ENV", DEV);
     }
 
     private static boolean isProduction() {
-        return getMode().equals(DB_PRODUCTION);
+        return getMode().equals(PROD);
     }
 
     private static TemplateEngine getTemplateEngine() {

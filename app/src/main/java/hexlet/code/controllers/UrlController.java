@@ -72,9 +72,11 @@ public class UrlController {
     public static Handler createUrl = ctx -> {
         String name = ctx.formParam("url");
 
+        URL urlObject;
+
         try {
 
-            new URL(name);
+            urlObject = new URL(name);
 
         } catch (MalformedURLException ignored) {
             ctx.sessionAttribute("flash", "Некорректный URL");
@@ -83,14 +85,12 @@ public class UrlController {
             return;
         }
 
-        var urlName = new URL(name);
+        var newName = urlObject.getProtocol() + "://" + urlObject.getHost();
 
-        var newName = urlName.getProtocol() + "://" + urlName.getHost();
-
-        String normaliseName = urlName.getPort() == -1 ? newName : newName + ":" + urlName.getPort();
+        String normalizedName = newName + (urlObject.getPort() == -1 ? "" :  ":" + urlObject.getPort());
 
         Url existingUrl = new QUrl()
-                .name.equalTo(normaliseName)
+                .name.equalTo(normalizedName)
                 .findOne();
 
         if (existingUrl != null) {
@@ -100,7 +100,7 @@ public class UrlController {
             return;
         }
 
-        Url url = new Url(normaliseName);
+        Url url = new Url(normalizedName);
         url.save();
 
         ctx.sessionAttribute("flash", "Страница успешно добавлена");
